@@ -29,6 +29,13 @@ public class Main {
 
         // The same job will be done in multiple threads ( and the same job will be done multiple times)
 
+        // Multiple constructors of thread
+        Thread thread5 = new Thread();
+        Thread thread6 = new Thread(r);
+        Thread sairam_thread = new Thread(r, "Sairam_Thread");
+        Thread sriram_thread = new Thread("Sriram_Thread");
+
+
 
 
 
