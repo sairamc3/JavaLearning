@@ -16,5 +16,22 @@ public class Main {
         Thread thread1 = new Thread(r);
         thread1.start(); // this will create a new thread - Thread-1
 
+
+        // Multiple Threads from single runnable
+
+        Thread thread2 = new Thread(r);
+        Thread thread3 = new Thread(r);
+        Thread thread4 = new Thread(r);
+
+        thread2.start();
+        thread3.start();
+        thread4.start();
+
+        // The same job will be done in multiple threads ( and the same job will be done multiple times)
+
+
+
+
+
     }
 }
