@@ -1,44 +1,34 @@
 package com.company;
 
-import com.company.Threads.MyThread;
-
 public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("The main method is running in -> "+ Thread.currentThread().getName());
-        MyThread myThread = new MyThread();
-        myThread.start(); // This will create a new thread - Thread-0
-        myThread.run(); // This part will trigger from main method, since you are calling it directly.
+        // Starting and running multiple Threads
+        // 1. Threads might not run in the order in which they were started
+        // 2. There is no guarantee that a thread once starts executing, it will keep executing until it's done.
+        //    Or that loop will complete before another thread completes.
 
-        Runnable r = () -> System.out.println("Important Job running in My runnable -> "+ Thread.currentThread().getName());
+        Runnable r = () -> {
+            for (int i = 0; i < 400; i++) {
+                System.out.println("Run by " + Thread.currentThread().getName() + ", i is " + i);
+            }
+        };
 
-        Thread thread1 = new Thread(r);
-        thread1.start(); // this will create a new thread - Thread-1
+        // Define Multiple threads
+        Thread bunny = new Thread(r, "Bunny");
+        Thread ntr = new Thread(r, "Jr.Ntr");
+        Thread mahesh = new Thread(r, "Mahesh");
 
+        // Start the threads
+        bunny.start();
+        ntr.start();
+        mahesh.start();
 
-        // Multiple Threads from single runnable
-
-        Thread thread2 = new Thread(r);
-        Thread thread3 = new Thread(r);
-        Thread thread4 = new Thread(r);
-
-        thread2.start();
-        thread3.start();
-        thread4.start();
-
-        // The same job will be done in multiple threads ( and the same job will be done multiple times)
-
-        // Multiple constructors of thread
-        Thread thread5 = new Thread();
-        Thread thread6 = new Thread(r);
-        Thread sairam_thread = new Thread(r, "Sairam_Thread");
-        Thread sriram_thread = new Thread("Sriram_Thread");
-
-
-
-
+        // Run this method and you will see the difference in the order in which they execute.
 
 
     }
+
+
 }
