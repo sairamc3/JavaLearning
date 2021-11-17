@@ -4,22 +4,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // Starting and running multiple Threads
-        // 1. Threads might not run in the order in which they were started
-        // 2. There is no guarantee that a thread once starts executing, it will keep executing until it's done.
-        //    Or that loop will complete before another thread completes.
+        // Opening two threads
+        // 1. Main Thread
+        // 2. Thread-0
+        // Both run for loop, with sleep time 1 sec, until 100
 
         Runnable r = () -> {
             for (int i = 0; i < 100; i++) {
+                    System.out.println("Run by " + Thread.currentThread().getName() + ", i is " + i );
 
-                if (i % 10 == 0) {
-                    System.out.println("Run by " + Thread.currentThread().getName() + ", i is " + i);
-
-                }
                 try {
-                    // This command will make the thread to sleep and wakes it to runnable state when the
-                    // specified time is up.
-                    // The decision to make it to Run state depends on the scheduler.
 
                     Thread.sleep(1000);
                 } catch (InterruptedException ex) {
@@ -29,17 +23,44 @@ public class Main {
             }
         };
 
-        // Define Multiple threads
-        Thread bunny = new Thread(r, "Bunny");
-        Thread ntr = new Thread(r, "Jr.Ntr");
-        Thread mahesh = new Thread(r, "Mahesh");
+        Thread thread2 = new Thread(r);
+        thread2.start();
 
-        // Start the threads
-        bunny.start();
-        ntr.start();
-        mahesh.start();
+        for(int i=0; i<40; i++){
+            System.out.println("Running Main Thread "+ Thread.currentThread().getName() + ", i is "+i);
 
-        // Run this method and you will see the difference in the order in which they execute.
+            try {
+                Thread.sleep(1_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+        // Until here both run in parallel or in time sliced way
+
+
+        try {
+
+            // The below command will make the main thread dependent on thread-0.
+            // So thread-0 will run first and when it completes only then main thread
+            // will resume to running state
+            thread2.join();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        for(int i=0; i<40; i++){
+            System.out.println("Running Main Thread "+ Thread.currentThread().getName() + ", i is "+i);
+
+            try {
+                Thread.sleep(1_000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+        }
+
 
 
     }
